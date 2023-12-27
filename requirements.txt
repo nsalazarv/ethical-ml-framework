@@ -1,0 +1,8 @@
+scikit-learn==1.2.2
+tensorflow==2.15.0
+scikeras==0.12.0
+witwidget==1.8.1
+aequitas==0.42.0
+shap==0.44.0
+aif360==0.5.0
+fairlearn==0.10.0
