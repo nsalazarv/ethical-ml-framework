@@ -6,3 +6,5 @@ aequitas==0.42.0
 shap==0.44.0
 aif360==0.5.0
 fairlearn==0.10.0
+lightgbm==4.3.0
+statsmodels==0.14.1

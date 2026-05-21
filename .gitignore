@@ -8,3 +8,5 @@
 *.aux
 *.bbl
 *.blg
+__pycache__/
+*.pyc
