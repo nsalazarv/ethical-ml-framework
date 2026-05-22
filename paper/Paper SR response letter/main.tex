@@ -33,28 +33,28 @@ The authors would like to thank the editor and reviewers for their constructive 
 The synthetic age variable requires clearer explanation and sensitivity analysis.
 \end{point}
 \begin{reply}
-We clarified that synthetic age is not observed defendant age and should not be interpreted as demographic truth. The manuscript now explains the normal and uniform generation strategies and states that the uniform-distribution results are included in the appendices as a sensitivity check.
+Thank you for raising this point. We clarified that synthetic age is not observed defendant age and should not be interpreted as demographic truth. The manuscript now explains the normal and uniform generation strategies and states that the uniform-distribution results are included in the appendices as a sensitivity check.
 \end{reply}
 
 \begin{point}
 The manuscript should include statistical tests for the performance claims.
 \end{point}
 \begin{reply}
-We added a statistical comparison table based on the confusion-matrix counts already reported in the manuscript. This keeps the statistical evidence aligned with the results described in the paper. We explicitly state that these are aggregate two-proportion tests, not paired McNemar tests, and that bootstrap confidence intervals over paired predictions were not used because those methods require the exact paired predictions corresponding to the reported manuscript run.
+Thank you for this important suggestion. We added statistical comparison tables based on the confusion-matrix counts already reported in the manuscript, separated by experiment to keep each comparison close to the corresponding results. This keeps the statistical evidence aligned with the results described in the paper. We explicitly state that these are aggregate two-proportion tests, not paired McNemar tests, and that bootstrap confidence intervals over paired predictions were not used because those methods require the exact paired predictions corresponding to the reported manuscript run.
 \end{reply}
 
 \begin{point}
 The fairness--performance trade-off should be stated more directly.
 \end{point}
 \begin{reply}
-We revised both experiment discussions and the conclusion to describe the trade-off directly. The drug trafficking model reduces FNR but substantially increases FPR and reduces accuracy. The petty theft model improves recall and F1 but reduces accuracy and precision.
+Thank you for encouraging us to make this clearer. We revised both experiment discussions and the conclusion to describe the trade-off directly. The drug trafficking model reduces FNR but substantially increases FPR and reduces accuracy. The petty theft model improves recall and F1 but reduces accuracy and precision.
 \end{reply}
 
 \begin{point}
 The manuscript should include a Model Card.
 \end{point}
 \begin{reply}
-We added a sample Model Card in the appendix. It documents intended use, out-of-scope use, data, labels, proxy protected attributes, fairness metrics, known limitations, and monitoring recommendations.
+Thank you for this helpful recommendation. We added one Model Card for each evaluated model in the appendix: drug trafficking base, drug trafficking improved, petty theft base, and petty theft improved. Each card documents intended use, out-of-scope use, data, performance evidence, fairness evidence, known limitations, and monitoring recommendations.
 \end{reply}
 
 \begin{point}
@@ -70,28 +70,28 @@ Thank you for your feedback. We corrected several typos and grammar issues, incl
 Typos and incomplete references should be corrected.
 \end{point}
 \begin{reply}
-We corrected visible typos such as ``Fairness'', ``confusion'', ``Foreigner'', ``Effective Hearings'', ``petty theft'', and ``drug trafficking'' in the revised manuscript. We also corrected inconsistent quotation marks and several grammatical issues.
+Thank you for pointing these out. We corrected visible typos such as ``Fairness'', ``confusion'', ``Foreigner'', ``Effective Hearings'', ``petty theft'', and ``drug trafficking'' in the revised manuscript. We also corrected inconsistent quotation marks and several grammatical issues.
 \end{reply}
 
 \begin{point}
 Fairness should be defined explicitly.
 \end{point}
 \begin{reply}
-We revised the key definitions section. Fairness is now defined operationally as an empirical property of model errors across groups, with emphasis on FNR, FOR, and TPR. We also added an example of regional FNR disparity.
+Thank you for this clarification request. We revised the key definitions section. Fairness is now defined operationally as an empirical property of model errors across groups, with emphasis on FNR, FOR, and TPR. We also added an example of regional FNR disparity.
 \end{reply}
 
 \begin{point}
 The use of Region as a protected attribute should be justified and limited.
 \end{point}
 \begin{reply}
-We now describe Region as a geographic proxy attribute. The revised manuscript explains that Region is useful for auditing territorial disparities but is not a substitute for race, ethnicity, socioeconomic status, gender, real age, or other individual-level protected attributes.
+Thank you for highlighting this limitation. We now describe Region as a geographic proxy attribute. The revised manuscript explains that Region is useful for auditing territorial disparities but is not a substitute for race, ethnicity, socioeconomic status, gender, real age, or other individual-level protected attributes.
 \end{reply}
 
 \begin{point}
 The contribution should be positioned beyond merely using fairness enhancers.
 \end{point}
 \begin{reply}
-We repositioned the contribution as a workflow that combines data review, baseline auditing, mitigation, interpretability, disparity analysis, statistical comparison, and documentation. The revised manuscript emphasizes the audit process and its limitations, not only the use of AIF360, Fairlearn, SHAP, or Aequitas.
+Thank you for helping us sharpen the contribution. We repositioned the contribution as an applied framework that combines data review, baseline auditing, mitigation, interpretability, disparity analysis, statistical comparison, and documentation. The revised manuscript emphasizes the audit process and its limitations, not only the use of AIF360, Fairlearn, SHAP, or Aequitas.
 \end{reply}
 
 \reviewersection
@@ -100,28 +100,28 @@ We repositioned the contribution as a workflow that combines data review, baseli
 The manuscript should discuss data provenance and label limitations.
 \end{point}
 \begin{reply}
-We added text explaining that the data come from historical DPP records and that the favourable/unfavourable labels are practical simplifications of legal outcomes. The revised manuscript states that these labels do not establish legal correctness, defence quality, or absence of historical bias.
+Thank you for raising this important issue. We added text explaining that the data come from historical DPP records and that the favourable/unfavourable labels are practical simplifications of legal outcomes. The revised manuscript states that these labels do not establish legal correctness, defence quality, or absence of historical bias.
 \end{reply}
 
 \begin{point}
 The manuscript should acknowledge possible laundering of judicial bias.
 \end{point}
 \begin{reply}
-We added this limitation in the data and conclusion sections. The revised manuscript now states that models trained on historical judicial records can reproduce and potentially launder historical biases present in case outcomes.
+Thank you for pointing out this risk. We added this limitation in the data and conclusion sections. The revised manuscript now states that models trained on historical judicial records can reproduce and potentially launder historical biases present in case outcomes.
 \end{reply}
 
 \begin{point}
 The generalisation claims should be limited.
 \end{point}
 \begin{reply}
-We revised the conclusion to state that the workflow is a practical tool for identifying measurable error disparities, testing mitigation strategies, documenting limitations, and informing whether a model should be further developed, restricted, or rejected. We also added external and prospective validation as future work.
+Thank you for this useful recommendation. We revised the conclusion to state that the framework is a practical tool for identifying measurable error disparities, testing mitigation strategies, documenting limitations, and informing whether a model should be further developed, restricted, or rejected. We also added external and prospective validation as future work.
 \end{reply}
 
 \begin{point}
 The framing should be changed from a holistic ethics framework to an applied technical audit.
 \end{point}
 \begin{reply}
-We changed the title and revised the abstract, methodology, and conclusion accordingly. The manuscript now consistently describes the contribution as a technical fairness-auditing and bias-mitigation workflow.
+Thank you for this framing suggestion. We kept the original title, \textit{Fairness and Transparency in ML: A Methodological Framework for Ethical Model Evaluation}, and revised the abstract, methodology, and conclusion to clarify the contribution as an applied fairness-auditing and bias-mitigation framework with explicit limitations.
 \end{reply}
 
 \end{document}
