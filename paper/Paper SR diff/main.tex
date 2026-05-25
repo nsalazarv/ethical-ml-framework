@@ -1,7 +1,7 @@
 \documentclass[fleqn,10pt]{wlscirep}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\title{Fairness and Transparency in ML: A Methodological Framework for Ethical Model Evaluation}
+\title{Fairness and Transparency in ML: A Methodological Framework}
 
 \author[1]{Nelson Salazar Valdebenito}
 \author[1,2,3]{Gonzalo A. Ruz}
@@ -22,7 +22,7 @@
 \keywords{Fairness, Transparency, Bias Mitigation, Machine Learning Auditing}
 
 \begin{abstract}
-As AI and ML applications become more common in public organisations, technical processes are needed to audit model behaviour, document limitations, and mitigate measurable disparities before deployment. This study presents a methodological framework for fairness auditing and bias mitigation in supervised classification, with emphasis on error disparities across groups rather than a complete solution to AI ethics. The framework is illustrated with two experiments based on data from Chile's Public Criminal Defence Office (DPP), where the task is to predict whether a criminal case has a favourable or unfavourable outcome for the defendant. Each experiment compares a base model with an improved model that uses reweighting, class weighting, threshold optimisation, interpretability analysis, and documentation. Fairness is operationalised through group-level error metrics, especially false negative rate (FNR), false omission rate (FOR), and true positive rate (TPR), using Region as a geographic proxy attribute. The results show that mitigation can reduce selected disparities, but also reveal a clear fairness--performance trade-off. In the drug trafficking experiment, the manuscript-level confusion matrices show a reduction in FNR from 40.54\% to 31.63\%, with an increase in FPR from 0.13\% to 39.25\%. Statistical comparisons are computed from the confusion-matrix counts reported in this manuscript and are therefore reported as aggregate two-proportion tests rather than paired McNemar tests. The framework should therefore be read as a technical audit and mitigation procedure, not as evidence that the resulting models are suitable for operational legal decision-making.
+As AI and ML applications become more common in public organisations, technical processes are needed to audit model behaviour, document limitations, and mitigate measurable disparities before deployment. This study presents a methodological framework for fairness auditing and bias mitigation in supervised classification, with emphasis on error disparities across groups rather than a complete solution to AI ethics. The framework is illustrated with two experiments based on data from Chile's Public Criminal Defence Office (DPP), where the task is to predict whether a criminal case has a favourable or unfavourable outcome for the defendant. Each experiment compares a base model with an improved model that uses reweighting, class weighting, threshold optimisation, interpretability analysis, and documentation. Fairness is operationalised through group-level error metrics, especially false negative rate (FNR), false omission rate (FOR), and true positive rate (TPR), using Region as a geographic proxy attribute. The results show that mitigation can reduce selected disparities, but also reveal a clear fairness--performance trade-off. In the drug trafficking experiment, the manuscript-level confusion matrices show a reduction in FNR from 40.54\% to 31.63\%, with an increase in FPR from 0.13\% to 39.25\%. Statistical comparisons are computed from the confusion-matrix counts reported in this manuscript and are therefore reported as aggregate two-proportion comparisons rather than paired McNemar tests. The framework should therefore be read as a technical audit and mitigation procedure, not as evidence that the resulting models are suitable for operational legal decision-making.
 \end{abstract}
 \begin{document}
 
@@ -223,8 +223,6 @@ Figure \ref{fig:framework_flowchart} shows a detailed flowchart for the proposed
 
 The following section will only present both experiments using the ``age'' variable simulated with the normal distribution, as there were no significant differences in the results compared to the uniform distribution. For completeness, the results using the uniform distribution for the ``age'' variable are included in Appendix A for the drug trafficking experiment and in Appendix B for the petty theft experiment.
 
-To avoid changing the reported experimental results, the statistical tests below use the confusion-matrix counts already presented in this manuscript. These tests should be interpreted as aggregate comparisons, not as paired prediction-level tests. In particular, McNemar tests and bootstrap confidence intervals over paired predictions are not used because those methods require the exact paired predictions corresponding to the reported manuscript run.
-
 The structure of this part is detailed as follows: First, we provide a detailed description of the experimental setup, including the architecture of the models employed, the hyperparameters used, and the modifications implemented in the improved version of the model. This is followed by a comparison of the performance metrics of both models, focusing on accuracy, precision, recall, and F1-score, to quantify their effectiveness.
 
 Next, we analyse the interpretability of the models by examining the SHAP values, which highlight the most influential features in the decision-making process of the models. Then, we evaluate the fairness of the models using bias metrics and the confusion matrix to assess whether any group disparities exist in their predictions. These bias metrics are the following,
@@ -272,16 +270,16 @@ This new model also uses the improved sample weights that were calculated by AIF
 
 \begin{table*}[!htb]
 \centering
-\begin{tabular}{|c|c|c|c|}
+\begin{tabular}{|c|c|c|}
 \hline
-\textbf{Metric} & \textbf{Improved - Base} & \textbf{95\% CI} & \textbf{p-value} \\ \hline
-Accuracy & -13.40 pp & [-15.15, -11.65] pp & $<0.001$ \\ 
-Recall / TPR & +8.91 pp & [6.35, 11.47] pp & $<0.001$ \\ 
-FNR & -8.91 pp & [-11.47, -6.35] pp & $<0.001$ \\ 
-FPR & +39.12 pp & [37.13, 41.11] pp & $<0.001$ \\ 
-F1 score & -6.97 pp & -- & -- \\ \hline
+\textbf{Metric} & \textbf{Improved - Base} & \textbf{95\% CI} \\ \hline
+Accuracy & -13.40 pp & [-15.15, -11.65] pp \\ 
+Recall / TPR & +8.91 pp & [6.35, 11.47] pp \\ 
+FNR & -8.91 pp & [-11.47, -6.35] pp \\ 
+FPR & +39.12 pp & [37.13, 41.11] pp \\ 
+F1 score & -6.97 pp & -- \\ \hline
 \end{tabular}
-\caption{Aggregate statistical comparison for the drug trafficking experiment using the manuscript confusion matrices. Percentage-point differences are improved minus base. Accuracy, recall, FNR, and FPR use two-proportion z-tests; F1 is reported as a descriptive aggregate difference because it has no simple two-proportion test under these counts.}
+\caption{Aggregate statistical comparison for the drug trafficking experiment using the manuscript confusion matrices. Percentage-point differences are improved minus base. Accuracy, recall, FNR, and FPR include 95\% confidence intervals for differences between two proportions; F1 is reported as a descriptive aggregate difference because it is not a simple proportion under these counts.}
 \label{tab:dt_statistical_tests}
 \end{table*}
 
@@ -578,16 +576,16 @@ For the improved model, the amount of leaves per tree goes up to 120 after doing
 
 \begin{table*}[!htb]
 \centering
-\begin{tabular}{|c|c|c|c|}
+\begin{tabular}{|c|c|c|}
 \hline
-\textbf{Metric} & \textbf{Improved - Base} & \textbf{95\% CI} & \textbf{p-value} \\ \hline
-Accuracy & -2.80 pp & [-3.90, -1.71] pp & $<0.001$ \\ 
-Recall / TPR & +9.04 pp & [6.80, 11.27] pp & $<0.001$ \\ 
-FNR & -9.04 pp & [-11.27, -6.80] pp & $<0.001$ \\ 
-FPR & +7.26 pp & [6.43, 8.08] pp & $<0.001$ \\ 
-F1 score & +4.29 pp & -- & -- \\ \hline
+\textbf{Metric} & \textbf{Improved - Base} & \textbf{95\% CI} \\ \hline
+Accuracy & -2.80 pp & [-3.90, -1.71] pp \\ 
+Recall / TPR & +9.04 pp & [6.80, 11.27] pp \\ 
+FNR & -9.04 pp & [-11.27, -6.80] pp \\ 
+FPR & +7.26 pp & [6.43, 8.08] pp \\ 
+F1 score & +4.29 pp & -- \\ \hline
 \end{tabular}
-\caption{Aggregate statistical comparison for the petty theft experiment using the manuscript confusion matrices. Percentage-point differences are improved minus base. Accuracy, recall, FNR, and FPR use two-proportion z-tests; F1 is reported as a descriptive aggregate difference because it has no simple two-proportion test under these counts.}
+\caption{Aggregate statistical comparison for the petty theft experiment using the manuscript confusion matrices. Percentage-point differences are improved minus base. Accuracy, recall, FNR, and FPR include 95\% confidence intervals for differences between two proportions; F1 is reported as a descriptive aggregate difference because it is not a simple proportion under these counts.}
 \label{tab:pt_statistical_tests}
 \end{table*}
 

@@ -1,14 +1,10 @@
 \documentclass[fleqn,10pt]{wlscirep}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL main_og.tex   Wed May 20 22:08:44 2026
-%DIF ADD main.tex      Thu May 21 23:18:41 2026
+%DIF ADD main.tex      Mon May 25 18:39:54 2026
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-%DIF 4c4
-%DIF < \title{Fairness and Transparency in ML: A Methodological Framework}
-%DIF -------
-\title{Fairness Auditing and Bias Mitigation in ML: A Technical Workflow} %DIF > 
-%DIF -------
+\title{Fairness and Transparency in ML: A Methodological Framework}
 
 \author[1]{Nelson Salazar Valdebenito}
 \author[1,2,3]{Gonzalo A. Ruz}
@@ -36,7 +32,7 @@
 %DIF 25c25
 %DIF < In the times when AI and ML applications are more widely spread across our society, new challenges arise when these are being used by public organisations. Ethical concerns may emerge for various reasons, but specially when these models inherit certain biases that could eventually lead up to hurting and/or punishing people with no reason whatsoever. In this study, a comprehensive methodology is introduced to address ethical considerations in machine learning, particularly focusing on biases and disparities. This paper showcases the application of this methodology through two experiments, each involving two models: a base model without ethical considerations and an improved one. The primary objective was to evaluate and mitigate inequalities and biases in machine learning models, in this case, using data from Chile's Public Criminal Defence Office (DPP), which needed a tool that could help in predicting the outcome of a criminal trial. The results were promising, with improvements observed in both models. Specifically, for one of our experiments, there was a reduction in the false negative rate from 40.54\% to 31.63\%. Additionally, disparities between attributes were reduced by an average of 44.37\%. The methodology not only aids in understanding these ethical challenges but also offers tools to optimize and address them, all while maintaining performance.
 %DIF -------
-As AI and ML applications become more common in public organisations, technical processes are needed to audit model behaviour, document limitations, and mitigate measurable disparities before deployment. This study presents a workflow for fairness auditing and bias mitigation in supervised classification, with emphasis on error disparities across groups rather than a complete solution to AI ethics. The workflow is illustrated with two experiments based on data from Chile's Public Criminal Defence Office (DPP), where the task is to predict whether a criminal case has a favourable or unfavourable outcome for the defendant. Each experiment compares a base model with an improved model that uses reweighting, class weighting, threshold optimisation, interpretability analysis, and documentation. Fairness is operationalised through group-level error metrics, especially false negative rate (FNR), false omission rate (FOR), and true positive rate (TPR), using Region as a geographic proxy attribute. The results show that mitigation can reduce selected disparities, but also reveal a clear fairness--performance trade-off. In the drug trafficking experiment, the manuscript-level confusion matrices show a reduction in FNR from 40.54\% to 31.63\%, with an increase in FPR from 0.13\% to 39.25\%. Statistical comparisons are computed from the confusion-matrix counts reported in this manuscript and are therefore reported as aggregate two-proportion tests rather than paired McNemar tests. The workflow should therefore be read as a technical audit and mitigation procedure, not as evidence that the resulting models are suitable for operational legal decision-making. %DIF > 
+As AI and ML applications become more common in public organisations, technical processes are needed to audit model behaviour, document limitations, and mitigate measurable disparities before deployment. This study presents a methodological framework for fairness auditing and bias mitigation in supervised classification, with emphasis on error disparities across groups rather than a complete solution to AI ethics. The framework is illustrated with two experiments based on data from Chile's Public Criminal Defence Office (DPP), where the task is to predict whether a criminal case has a favourable or unfavourable outcome for the defendant. Each experiment compares a base model with an improved model that uses reweighting, class weighting, threshold optimisation, interpretability analysis, and documentation. Fairness is operationalised through group-level error metrics, especially false negative rate (FNR), false omission rate (FOR), and true positive rate (TPR), using Region as a geographic proxy attribute. The results show that mitigation can reduce selected disparities, but also reveal a clear fairness--performance trade-off. In the drug trafficking experiment, the manuscript-level confusion matrices show a reduction in FNR from 40.54\% to 31.63\%, with an increase in FPR from 0.13\% to 39.25\%. Statistical comparisons are computed from the confusion-matrix counts reported in this manuscript and are therefore reported as aggregate two-proportion comparisons rather than paired McNemar tests. The framework should therefore be read as a technical audit and mitigation procedure, not as evidence that the resulting models are suitable for operational legal decision-making. %DIF > 
 %DIF -------
 \end{abstract}
 %DIF PREAMBLE EXTENSION ADDED BY LATEXDIFF
@@ -91,7 +87,7 @@ As AI and ML applications become more common in public organisations, technical 
 
 \label{Introduction}
 
- As Machine Learning (ML) and Artificial Intelligence (AI) tools are more common in our society, new challenges arise when these get applied in the public sector -- such as in organisations and/or public policies \cite{312480,doi:10.1080/01900692.2018.1498103}. Since these tools are often considered ``black boxes'', it is quite difficult to understand exactly how an algorithm arrives at a particular decision. \DIFaddbegin \DIFadd{This paper addresses that problem through a technical workflow for auditing and mitigating measurable model disparities, rather than through a general theory of ethical AI.
+ As Machine Learning (ML) and Artificial Intelligence (AI) tools are more common in our society, new challenges arise when these get applied in the public sector -- such as in organisations and/or public policies \cite{312480,doi:10.1080/01900692.2018.1498103}. Since these tools are often considered ``black boxes'', it is quite difficult to understand exactly how an algorithm arrives at a particular decision. \DIFaddbegin \DIFadd{This paper addresses that problem through a technical framework for auditing and mitigating measurable model disparities, rather than through a general theory of ethical AI.
 }\DIFaddend 
 
 Ethical issues may arise when considering the inherent biases in the data used to train these algorithms. If the judicial system has historically exhibited bias towards particular demographic groups, an algorithm trained with such data may reinforce or intensify this bias.
@@ -155,7 +151,7 @@ This paper was produced as part of the Ethical Algorithms (\textit{Algoritmos É
 
 This project focuses primarily on those performed by or for public institutions and/or state agencies. In particular, this paper is part of the work carried out for the Public Defence Office (DPP) of Chile, a public body that provides defence services to anyone who does not have a lawyer to defend them in a criminal trial. The DPP needed a predictive system to help predict the outcome of a trial in order to carry out audit and quality control tasks on its defence lawyers.
 
-The results shown in this paper correspond to the application of a \DIFdelbegin \DIFdel{framework }\DIFdelend \DIFaddbegin \DIFadd{technical workflow }\DIFaddend developed for this purpose, which is used to evaluate inequalities and biases in ML models. This \DIFdelbegin \DIFdel{framework aims not only }\DIFdelend \DIFaddbegin \DIFadd{workflow aims }\DIFaddend to help analyse\DIFdelbegin \DIFdel{and understand these problems , but also to mitigate them }\DIFdelend \DIFaddbegin \DIFadd{, document, and partially mitigate these problems }\DIFaddend by using different tools\DIFdelbegin \DIFdel{to optimise and address them}\DIFdelend \DIFaddbegin \DIFadd{, but it does not claim to solve the broader ethical and legal questions raised by predictive systems in criminal justice}\DIFaddend . The methodology was put into test by doing two experiments, each one with two models: a base model \DIFdelbegin \DIFdel{with no ethical considerations, }\DIFdelend and an optimised one. \DIFdelbegin \DIFdel{In the end, both models were improved in both disparitiesand biases, whilst having a minimal impact on performance }\DIFdelend \DIFaddbegin \DIFadd{The results show reductions in selected error disparities, but also show that mitigation can reduce conventional performance metrics or increase other error types}\DIFaddend . Our best results include a false negative rate reduction \DIFaddbegin \DIFadd{from }\DIFaddend 40.54\% to 31.63\%, and \DIFdelbegin \DIFdel{its disparities between attribute }\DIFdelend \DIFaddbegin \DIFadd{disparities between attributes }\DIFaddend reduced by an average of 44.37\% for one of the experiments.
+The results shown in this paper correspond to the application of a \DIFaddbegin \DIFadd{technical }\DIFaddend framework developed for this purpose, which is used to evaluate inequalities and biases in ML models. This framework aims \DIFdelbegin \DIFdel{not only }\DIFdelend to help analyse\DIFdelbegin \DIFdel{and understand these problems , but also to mitigate them }\DIFdelend \DIFaddbegin \DIFadd{, document, and partially mitigate these problems }\DIFaddend by using different tools\DIFdelbegin \DIFdel{to optimise and address them}\DIFdelend \DIFaddbegin \DIFadd{, but it does not claim to solve the broader ethical and legal questions raised by predictive systems in criminal justice}\DIFaddend . The methodology was put into test by doing two experiments, each one with two models: a base model \DIFdelbegin \DIFdel{with no ethical considerations, }\DIFdelend and an optimised one. \DIFdelbegin \DIFdel{In the end, both models were improved in both disparitiesand biases, whilst having a minimal impact on performance }\DIFdelend \DIFaddbegin \DIFadd{The results show reductions in selected error disparities, but also show that mitigation can reduce conventional performance metrics or increase other error types}\DIFaddend . Our best results include a false negative rate reduction \DIFaddbegin \DIFadd{from }\DIFaddend 40.54\% to 31.63\%, and \DIFdelbegin \DIFdel{its disparities between attribute }\DIFdelend \DIFaddbegin \DIFadd{disparities between attributes }\DIFaddend reduced by an average of 44.37\% for one of the experiments.
 
 This paper is structured as follows. Section 2 presents the proposed methodology for this project, as well as the datasets and tools that were used. In section 3, the experiments, models and results are shown; whilst in section 4 those results are discussed. Finally, section 5 contains the conclusion and future work.
 
@@ -163,9 +159,9 @@ This paper is structured as follows. Section 2 presents the proposed methodology
 \section{Methodology}
 \label{methods}
 
-We propose a \DIFdelbegin \DIFdel{comprehensive framework }\DIFdelend \DIFaddbegin \DIFadd{technical workflow }\DIFaddend for evaluating and enhancing ML models in terms of fairness and bias, applicable across different techniques like gradient boosting machines and neural networks. This \DIFdelbegin \DIFdel{framework }\DIFdelend \DIFaddbegin \DIFadd{workflow }\DIFaddend is designed to answer key questions on model performance, \DIFdelbegin \DIFdel{improvements, and }\DIFdelend \DIFaddbegin \DIFadd{error distribution, and model }\DIFaddend functioning in the context of fairness \DIFdelbegin \DIFdel{and bias}\DIFdelend \DIFaddbegin \DIFadd{auditing}\DIFaddend .
+We propose a \DIFdelbegin \DIFdel{comprehensive }\DIFdelend \DIFaddbegin \DIFadd{technical }\DIFaddend framework for evaluating and enhancing ML models in terms of fairness and bias, applicable across different techniques like gradient boosting machines and neural networks. This framework is designed to answer key questions on model performance, \DIFdelbegin \DIFdel{improvements, and }\DIFdelend \DIFaddbegin \DIFadd{error distribution, and model }\DIFaddend functioning in the context of fairness \DIFdelbegin \DIFdel{and bias}\DIFdelend \DIFaddbegin \DIFadd{auditing}\DIFaddend .
 
-It employs a two-part experiment format, contrasting a base model with an \DIFdelbegin \DIFdel{ethically }\DIFdelend improved model that addresses \DIFdelbegin \DIFdel{fairness and biases. The framework }\DIFdelend \DIFaddbegin \DIFadd{measurable fairness and bias concerns. The workflow }\DIFaddend emphasises pre- and post-training phases, and encompasses elements of analysis and documentation for \DIFdelbegin \DIFdel{a complete ethical model evaluation}\DIFdelend \DIFaddbegin \DIFadd{an applied model audit}\DIFaddend .
+It employs a two-part experiment format, contrasting a base model with an \DIFdelbegin \DIFdel{ethically }\DIFdelend improved model that addresses \DIFdelbegin \DIFdel{fairness and biases}\DIFdelend \DIFaddbegin \DIFadd{measurable fairness and bias concerns}\DIFaddend . The framework emphasises pre- and post-training phases, and encompasses elements of analysis and documentation for \DIFdelbegin \DIFdel{a complete ethical model evaluation}\DIFdelend \DIFaddbegin \DIFadd{an applied model audit}\DIFaddend .
 
 The proposed framework follows a five-step process,
 
@@ -284,10 +280,7 @@ Figure \ref{fig:framework_flowchart} shows a detailed flowchart for the proposed
 
 The following section will only present both experiments using the ``age'' variable simulated with the normal distribution, as there were no significant differences in the results compared to the uniform distribution. For completeness, the results using the uniform distribution for the ``age'' variable are included in Appendix A for the drug trafficking experiment and in Appendix B for the petty theft experiment.
 
-\DIFaddbegin \DIFadd{To avoid changing the reported experimental results, the statistical tests below use the confusion-matrix counts already presented in this manuscript. These tests should be interpreted as aggregate comparisons, not as paired prediction-level tests. In particular, McNemar tests and bootstrap confidence intervals over paired predictions are not used because those methods require the exact paired predictions corresponding to the reported manuscript run.
-}
-
-\DIFaddend The structure of this part is detailed as follows: First, we provide a detailed description of the experimental setup, including the architecture of the models employed, the hyperparameters used, and the modifications implemented in the improved version of the model. This is followed by a comparison of the performance metrics of both models, focusing on accuracy, precision, recall, and F1-score, to quantify their effectiveness.
+The structure of this part is detailed as follows: First, we provide a detailed description of the experimental setup, including the architecture of the models employed, the hyperparameters used, and the modifications implemented in the improved version of the model. This is followed by a comparison of the performance metrics of both models, focusing on accuracy, precision, recall, and F1-score, to quantify their effectiveness.
 
 Next, we analyse the interpretability of the models by examining the SHAP values, which highlight the most influential features in the decision-making process of the models. Then, we evaluate the fairness of the models using bias metrics and the \DIFdelbegin \DIFdel{confussion }\DIFdelend \DIFaddbegin \DIFadd{confusion }\DIFaddend matrix to assess whether any group disparities exist in their predictions. These bias metrics are the following,
 \begin{itemize}
@@ -309,28 +302,7 @@ Finally, we analyse the disparities between groups using the Aequitas framework 
 
 These assessments were made considering the True Positive Rate, the False Omission Rate and the False Negative Rate. The TPR is of interest to us to see how positive predictions are distributed within the groups of each feature; FOR is useful to see where the model is failing to make correct predictions; while the FNR aids in understanding the proportion of false negatives over the total actual positives. Finally, our disparity tolerance ($\tau$) is set to 1.5 times larger or smaller than the size of each reference group, which is slightly higher than the threshold recommended by Aequitas (1.25). This choice was made due to the limited amount of data available, and, as there are imbalances in the groups within the dataset, a smaller value could inherently skew the metrics and complicate the analysis.
 
-\DIFaddbegin \begin{table*}[!htb]
-\centering
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-\textbf{\DIFaddFL{Experiment}} & \textbf{\DIFaddFL{Metric}} & \textbf{\DIFaddFL{Improved - Base}} & \textbf{\DIFaddFL{95\% CI}} & \textbf{\DIFaddFL{p-value}} \\ \hline
-\DIFaddFL{Drug trafficking }& \DIFaddFL{Accuracy }& \DIFaddFL{-13.40 pp }& [\DIFaddFL{-15.15, -11.65}] \DIFaddFL{pp }& \DIFaddFL{$<0.001$ }\\ 
-\DIFaddFL{Drug trafficking }& \DIFaddFL{Recall / TPR }& \DIFaddFL{+8.91 pp }& [\DIFaddFL{6.35, 11.47}] \DIFaddFL{pp }& \DIFaddFL{$<0.001$ }\\ 
-\DIFaddFL{Drug trafficking }& \DIFaddFL{FNR }& \DIFaddFL{-8.91 pp }& [\DIFaddFL{-11.47, -6.35}] \DIFaddFL{pp }& \DIFaddFL{$<0.001$ }\\ 
-\DIFaddFL{Drug trafficking }& \DIFaddFL{FPR }& \DIFaddFL{+39.12 pp }& [\DIFaddFL{37.13, 41.11}] \DIFaddFL{pp }& \DIFaddFL{$<0.001$ }\\ 
-\DIFaddFL{Drug trafficking }& \DIFaddFL{F1 score }& \DIFaddFL{-6.97 pp }& \DIFaddFL{-- }& \DIFaddFL{-- }\\ \hline
-\DIFaddFL{Petty theft }& \DIFaddFL{Accuracy }& \DIFaddFL{-2.80 pp }& [\DIFaddFL{-3.90, -1.71}] \DIFaddFL{pp }& \DIFaddFL{$<0.001$ }\\ 
-\DIFaddFL{Petty theft }& \DIFaddFL{Recall / TPR }& \DIFaddFL{+9.04 pp }& [\DIFaddFL{6.80, 11.27}] \DIFaddFL{pp }& \DIFaddFL{$<0.001$ }\\ 
-\DIFaddFL{Petty theft }& \DIFaddFL{FNR }& \DIFaddFL{-9.04 pp }& [\DIFaddFL{-11.27, -6.80}] \DIFaddFL{pp }& \DIFaddFL{$<0.001$ }\\ 
-\DIFaddFL{Petty theft }& \DIFaddFL{FPR }& \DIFaddFL{+7.26 pp }& [\DIFaddFL{6.43, 8.08}] \DIFaddFL{pp }& \DIFaddFL{$<0.001$ }\\ 
-\DIFaddFL{Petty theft }& \DIFaddFL{F1 score }& \DIFaddFL{+4.29 pp }& \DIFaddFL{-- }& \DIFaddFL{-- }\\ \hline
-\end{tabular}
-\caption{\DIFaddFL{Aggregate statistical comparison between base and improved models using the manuscript confusion matrices. Percentage-point differences are improved minus base. Accuracy, recall, FNR, and FPR use two-proportion z-tests; F1 is reported as a descriptive aggregate difference because it has no simple two-proportion test under these counts.}}
-\label{tab:statistical_tests}
-\end{table*}
-
-
-\DIFaddend \subsection{Drug trafficking experiment}
+\subsection{Drug trafficking experiment}
 
 For this experiment, a multi-layer perceptron was used. The details of the architecture and training for the base situation are as follows,
 
@@ -353,7 +325,22 @@ For the second part of this experiment, the improved situation, there is a simil
 
 This new model also uses the improved sample weights that were calculated by AIF360's reweighting function. The class weight were also balanced using Scikit-Learn's \textit{compute\_class\_weight} method, even though it was not really necessary to do so.
 
-\subsubsection{Model performance}
+\DIFaddbegin \begin{table*}[!htb]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{\DIFaddFL{Metric}} & \textbf{\DIFaddFL{Improved - Base}} & \textbf{\DIFaddFL{95\% CI}} \\ \hline
+\DIFaddFL{Accuracy }& \DIFaddFL{-13.40 pp }& [\DIFaddFL{-15.15, -11.65}] \DIFaddFL{pp }\\ 
+\DIFaddFL{Recall / TPR }& \DIFaddFL{+8.91 pp }& [\DIFaddFL{6.35, 11.47}] \DIFaddFL{pp }\\ 
+\DIFaddFL{FNR }& \DIFaddFL{-8.91 pp }& [\DIFaddFL{-11.47, -6.35}] \DIFaddFL{pp }\\ 
+\DIFaddFL{FPR }& \DIFaddFL{+39.12 pp }& [\DIFaddFL{37.13, 41.11}] \DIFaddFL{pp }\\ 
+\DIFaddFL{F1 score }& \DIFaddFL{-6.97 pp }& \DIFaddFL{-- }\\ \hline
+\end{tabular}
+\caption{\DIFaddFL{Aggregate statistical comparison for the drug trafficking experiment using the manuscript confusion matrices. Percentage-point differences are improved minus base. Accuracy, recall, FNR, and FPR include 95\% confidence intervals for differences between two proportions; F1 is reported as a descriptive aggregate difference because it is not a simple proportion under these counts.}}
+\label{tab:dt_statistical_tests}
+\end{table*}
+
+\DIFaddend \subsubsection{Model performance}
 %\resizebox{5cm}{!}{
 
 \begin{table*}[!htb]
@@ -375,7 +362,7 @@ Improved Train &     67\% &      67\% &   72\% &     70\% \\
 
 %}
 
-There are clear differences between the base and improved configurations. As it can be seen in Table \ref{tab_perf_tdrogas:}, the base model excels in accuracy and precision, but the recall is quite low, indicating a tendency towards negative predictions. The improved version, on the other hand, opts for a compromise, favouring a balanced distribution of false negatives and positives, although at the expense of some accuracy and precision. \DIFaddbegin \DIFadd{The aggregate comparison in Table \ref{tab:statistical_tests} supports this interpretation: recall increases by 8.91 percentage points and FNR decreases by the same amount, while accuracy decreases by 13.40 percentage points and FPR increases substantially.
+There are clear differences between the base and improved configurations. As it can be seen in Table \ref{tab_perf_tdrogas:}, the base model excels in accuracy and precision, but the recall is quite low, indicating a tendency towards negative predictions. The improved version, on the other hand, opts for a compromise, favouring a balanced distribution of false negatives and positives, although at the expense of some accuracy and precision. \DIFaddbegin \DIFadd{The aggregate comparison in Table \ref{tab:dt_statistical_tests} supports this interpretation: recall increases by 8.91 percentage points and FNR decreases by the same amount, while accuracy decreases by 13.40 percentage points and FPR increases substantially.
 }\DIFaddend 
 
 
@@ -440,7 +427,7 @@ These two figures \DIFdelbegin \DIFdel{complements }\DIFdelend \DIFaddbegin \DIF
 
 \subsubsection{Bias and Confusion Matrix}
 
-For this part of the experiment, a new column was added for analysis purposes. This is ``\DIFdelbegin \DIFdel{Zona}\DIFdelend \DIFaddbegin \DIFadd{Zone}\DIFaddend '', or the zone of the country, as Chile can be divided \DIFdelbegin \DIFdel{intro }\DIFdelend \DIFaddbegin \DIFadd{into }\DIFaddend three different zones according to its region: north, central and south. This can be useful for analysing the impact of the model in a broader way than ``Region''. 
+For this part of the experiment, a new column was added for analysis purposes. This is ``Zona'', or the zone of the country, as Chile can be divided \DIFdelbegin \DIFdel{intro }\DIFdelend \DIFaddbegin \DIFadd{into }\DIFaddend three different zones according to its region: north, central and south. This can be useful for analysing the impact of the model in a broader way than ``Region''. 
 
 The overall metrics for the False Positive Rate (FPR), False Negative Rate (FNR), False Discovery Rate (FDR) and False Omission Rate (FOR) between attributes are shown in Table \ref{tab_bias_tdrogas:}. The confusion matrix for both models can be found on Table \ref{tab_cm_tdrogas:}.
 
@@ -645,7 +632,22 @@ The second experiment has a different model architecture, in this case using a g
 
 For the improved model, the amount of leaves per tree goes up to 120 after doing a basic grid search optimisation. It also considers the new sample weights calculated by AIF360, as well as the new class weights from the \textit{compute\_class\_weight} function.
 
-\subsubsection{Model performance}
+\DIFaddbegin \begin{table*}[!htb]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{\DIFaddFL{Metric}} & \textbf{\DIFaddFL{Improved - Base}} & \textbf{\DIFaddFL{95\% CI}} \\ \hline
+\DIFaddFL{Accuracy }& \DIFaddFL{-2.80 pp }& [\DIFaddFL{-3.90, -1.71}] \DIFaddFL{pp }\\ 
+\DIFaddFL{Recall / TPR }& \DIFaddFL{+9.04 pp }& [\DIFaddFL{6.80, 11.27}] \DIFaddFL{pp }\\ 
+\DIFaddFL{FNR }& \DIFaddFL{-9.04 pp }& [\DIFaddFL{-11.27, -6.80}] \DIFaddFL{pp }\\ 
+\DIFaddFL{FPR }& \DIFaddFL{+7.26 pp }& [\DIFaddFL{6.43, 8.08}] \DIFaddFL{pp }\\ 
+\DIFaddFL{F1 score }& \DIFaddFL{+4.29 pp }& \DIFaddFL{-- }\\ \hline
+\end{tabular}
+\caption{\DIFaddFL{Aggregate statistical comparison for the petty theft experiment using the manuscript confusion matrices. Percentage-point differences are improved minus base. Accuracy, recall, FNR, and FPR include 95\% confidence intervals for differences between two proportions; F1 is reported as a descriptive aggregate difference because it is not a simple proportion under these counts.}}
+\label{tab:pt_statistical_tests}
+\end{table*}
+
+\DIFaddend \subsubsection{Model performance}
 
 \begin{table}[!htb]
 \centering
@@ -664,7 +666,7 @@ For the improved model, the amount of leaves per tree goes up to 120 after doing
 \label{tab_perf_hfalta:}
 \end{table}
 
-The results of this experiment, as described in Table \ref{tab_perf_hfalta:}, show a suboptimal performance for both models, due to the lack of key variables in the dataset that are essential for effective training. However, the improved model shows a clear advantage \DIFdelbegin \DIFdel{, outperforming the base model with superior }\DIFdelend \DIFaddbegin \DIFadd{in }\DIFaddend recall and F1 values. \DIFdelbegin \DIFdel{While }\DIFdelend \DIFaddbegin \DIFadd{This advantage comes with lower }\DIFaddend accuracy and precision\DIFdelbegin \DIFdel{show marginal fluctuations, the overall performance of the improved model makes it superior. }\DIFdelend \DIFaddbegin \DIFadd{, so the improved model should not be described as globally superior. The aggregate comparison in Table \ref{tab:statistical_tests} shows the same trade-off: recall increases by 9.04 percentage points and FNR decreases by 9.04 percentage points, while accuracy decreases by 2.80 percentage points and FPR increases by 7.26 percentage points.
+The results of this experiment, as described in Table \ref{tab_perf_hfalta:}, show a suboptimal performance for both models, due to the lack of key variables in the dataset that are essential for effective training. However, the improved model shows a clear advantage \DIFdelbegin \DIFdel{, outperforming the base model with superior }\DIFdelend \DIFaddbegin \DIFadd{in }\DIFaddend recall and F1 values. \DIFdelbegin \DIFdel{While }\DIFdelend \DIFaddbegin \DIFadd{This advantage comes with lower }\DIFaddend accuracy and precision\DIFdelbegin \DIFdel{show marginal fluctuations, the overall performance of the improved model makes it superior. }\DIFdelend \DIFaddbegin \DIFadd{, so the improved model should not be described as globally superior. The aggregate comparison in Table \ref{tab:pt_statistical_tests} shows the same trade-off: recall increases by 9.04 percentage points and FNR decreases by 9.04 percentage points, while accuracy decreases by 2.80 percentage points and FPR increases by 7.26 percentage points.
 }\DIFaddend 
 
 \subsubsection{SHAP Values}
@@ -911,16 +913,16 @@ However, this is just one aspect of the issue. Quantity is crucial, as it is usu
 
 Ultimately, while some improvement techniques can enhance models, data remains the primary factor in developing a responsible and impartial model. Thus, altering hyperparameters or adjusting prediction thresholds may prove insufficient when the available data is lacking, as has been demonstrated by these experiments.
 
-In the end, this \DIFdelbegin \DIFdel{framework }\DIFdelend \DIFaddbegin \DIFadd{workflow }\DIFaddend is designed to be versatile and applicable across various domains and datasets, particularly for classification problems that require \DIFdelbegin \DIFdel{ethical considerations}\DIFdelend \DIFaddbegin \DIFadd{fairness auditing and documentation}\DIFaddend . While it \DIFdelbegin \DIFdel{may }\DIFdelend \DIFaddbegin \DIFadd{does }\DIFaddend not provide a \DIFdelbegin \DIFdel{perfect }\DIFdelend \DIFaddbegin \DIFadd{complete }\DIFaddend solution for every scenario, it serves as a \DIFdelbegin \DIFdel{valuable tool for addressing ethical concerns during the development of new models}\DIFdelend \DIFaddbegin \DIFadd{practical tool for identifying measurable error disparities, testing mitigation strategies, documenting limitations, and informing whether a model should be further developed, restricted, or rejected}\DIFaddend .
+In the end, this framework is designed to be versatile and applicable across various domains and datasets, particularly for classification problems that require \DIFdelbegin \DIFdel{ethical considerations}\DIFdelend \DIFaddbegin \DIFadd{fairness auditing and documentation}\DIFaddend . While it \DIFdelbegin \DIFdel{may }\DIFdelend \DIFaddbegin \DIFadd{does }\DIFaddend not provide a \DIFdelbegin \DIFdel{perfect }\DIFdelend \DIFaddbegin \DIFadd{complete }\DIFaddend solution for every scenario, it serves as a \DIFdelbegin \DIFdel{valuable tool for addressing ethical concerns during the development of new models}\DIFdelend \DIFaddbegin \DIFadd{practical tool for identifying measurable error disparities, testing mitigation strategies, documenting limitations, and informing whether a model should be further developed, restricted, or rejected}\DIFaddend .
 
 Finally, as we continue to develop and improve our methodology for identifying and addressing biases in ML models, a number of possibilities emerge for future investigation and enhancement of our current framework.
 
 \begin{enumerate}
-    \item \textbf{Test additional protected variables}: Due to data limitations, the only protected variable we could test was ``Region''. In the future, other variables could be analysed in order to further validate this \DIFdelbegin \DIFdel{framework}\DIFdelend \DIFaddbegin \DIFadd{workflow}\DIFaddend . Variables such as \DIFdelbegin \DIFdel{the }\DIFdelend nationality, ethnicity, \DIFdelbegin \DIFdel{or the socioeconomic status-- among others -- }\DIFdelend \DIFaddbegin \DIFadd{sex, socioeconomic status, real age, prior cases, and other relevant case features }\DIFaddend could prove useful for these kinds of analyses. 
+    \item \textbf{Test additional protected variables}: Due to data limitations, the only protected variable we could test was ``Region''. In the future, other variables could be analysed in order to further validate this framework. Variables such as \DIFdelbegin \DIFdel{the }\DIFdelend nationality, ethnicity, \DIFdelbegin \DIFdel{or the socioeconomic status-- among others -- }\DIFdelend \DIFaddbegin \DIFadd{sex, socioeconomic status, real age, prior cases, and other relevant case features }\DIFaddend could prove useful for these kinds of analyses. 
     \item \textbf{Optimisation Techniques in Model Training}: There is potential in using regularization methods that take into account protected variables \cite{DBLP:journals/corr/abs-1910-11779}. By incorporating fairness considerations into the optimisation process, it is expected that models will be able to be trained to intrinsically decrease bias and more accurately represent all aspects of the data. This would have a twofold benefit, improving prediction precision while also guaranteeing that the model does not unintentionally continue societal biases.
 
     \item \textbf{Data Disparity Sampling Techniques}: Data forms the fundamental basis upon which ML models are built. However, discrepancies in data may create a notable source of prejudice, particularly when certain groups are underrepresented. To overcome this hurdle, we could examine and utilise advanced sampling techniques customised to the distinct needs of each use case. By guaranteeing that the training data is a more representative sample of the wider population, we can create models that are both more precise and impartial. These techniques may vary from oversampling underrepresented groups to more advanced methods of creating synthetic data, guaranteeing that models have enough data to learn from even if the historical datasets are biased.
-    \DIFaddbegin \item \textbf{\DIFadd{External and prospective validation}}\DIFadd{: Future work should evaluate whether the workflow remains stable under new cases, different time periods, and independent datasets. This is particularly important in legal domains, where historical labels can change with policy, jurisprudence, and institutional practice.
+    \DIFaddbegin \item \textbf{\DIFadd{External and prospective validation}}\DIFadd{: Future work should evaluate whether the framework remains stable under new cases, different time periods, and independent datasets. This is particularly important in legal domains, where historical labels can change with policy, jurisprudence, and institutional practice.
     }\DIFaddend 
 
 \end{enumerate}
@@ -1366,10 +1368,10 @@ Repository: \url{https://github.com/nsalazarv/ethical-ml-framework}
 \section*{Additional information}
 
 \appendix
-\section{\DIFdelbegin \DIFdel{Drug traffiking experiment}\DIFdelend \DIFaddbegin \DIFadd{Sample Model Card}\DIFaddend }
+\section{\DIFdelbegin \DIFdel{Drug traffiking experiment}\DIFdelend \DIFaddbegin \DIFadd{Model Cards}\DIFaddend }
 \DIFaddbegin 
 
-\DIFadd{This appendix provides a concise Model Card template for documenting the type of models audited in this paper. It is not a deployment approval document; it is intended to make the model's intended use, limitations, and fairness evidence explicit.
+\DIFadd{This appendix provides one concise Model Card for each model evaluated in the manuscript. These cards are documentation artefacts, not deployment approval documents; they make each model's intended use, limitations, and fairness evidence explicit.
 }
 
 \begin{table*}[!htb]
@@ -1377,18 +1379,71 @@ Repository: \url{https://github.com/nsalazarv/ethical-ml-framework}
 \begin{tabular}{|p{3.5cm}|p{11cm}|}
 \hline
 \textbf{\DIFaddFL{Field}} & \textbf{\DIFaddFL{Description}} \\ \hline
-\DIFaddFL{Model details }& \DIFaddFL{Binary classifier for predicting whether a case has a favourable or unfavourable outcome for the defendant. The experiments use MLP and LightGBM implementations depending on the dataset. }\\ \hline
-\DIFaddFL{Intended use }& \DIFaddFL{Retrospective audit, quality-control analysis, and methodological evaluation. The model is not intended to replace legal judgement or to determine whether a lawyer should defend a person. }\\ \hline
+\DIFaddFL{Model details }& \DIFaddFL{Drug trafficking base model. Binary MLP classifier implemented with TensorFlow to predict favourable (1) or unfavourable (0) case outcomes. }\\ \hline
+\DIFaddFL{Intended use }& \DIFaddFL{Retrospective baseline audit and methodological comparison for the drug trafficking experiment. }\\ \hline
 \DIFaddFL{Out-of-scope use }& \DIFaddFL{Sentencing, bail, eligibility, defence allocation, automated case triage without human review, or any direct decision about a defendant's rights or legal strategy. }\\ \hline
-\DIFaddFL{Data }& \DIFaddFL{Historical DPP records for drug trafficking and petty theft cases between 2017 and 2022. The available features are limited and omit important variables such as real age, sex, prior cases, and several case-specific legal facts. }\\ \hline
-\DIFaddFL{Label definition }& \DIFaddFL{Favourable and unfavourable outcomes are simplified labels derived from case outcomes. They do not establish legal correctness, quality of defence, or absence of historical bias. }\\ \hline
-\DIFaddFL{Protected/proxy attribute }& \DIFaddFL{Region is used as a geographic proxy for fairness auditing because other protected attributes were unavailable. It should not be interpreted as a complete protected-attribute analysis. }\\ \hline
-\DIFaddFL{Fairness metrics }& \DIFaddFL{FNR, FOR, TPR, FPR, and Aequitas disparity ratios by group. Mitigation is considered successful only for the specific metrics reported, not for all possible fairness criteria. }\\ \hline
-\DIFaddFL{Known limitations }& \DIFaddFL{Synthetic age is not observed age; model predictions inherit limitations and potential biases in historical data; statistical tests are computed from manuscript-level aggregate confusion matrices rather than exact paired prediction files. }\\ \hline
-\DIFaddFL{Monitoring recommendations }& \DIFaddFL{Recompute performance and disparity metrics on new data, compare against the documented baseline, audit label drift, and review any operational use with legal and domain experts before deployment. }\\ \hline
+\DIFaddFL{Data }& \DIFaddFL{Historical DPP drug trafficking records from 2017--2022, using defendant- and case-related variables available for modelling plus synthetic age. }\\ \hline
+\DIFaddFL{Performance evidence }& \DIFaddFL{Test accuracy 78\%, precision 100\%, recall 59\%, and F1 score 75\%. Confusion matrix: 1594 true positives, 2323 true negatives, 3 false positives, and 1087 false negatives. }\\ \hline
+\DIFaddFL{Fairness evidence }& \DIFaddFL{Overall FPR 0.13\%, FNR 40.54\%, FDR 0.19\%, and FOR 31.88\%. Region is used as a geographic proxy attribute; the base model shows substantial regional FNR and TPR disparities. }\\ \hline
+\DIFaddFL{Known limitations }& \DIFaddFL{Synthetic age is not observed age; several relevant legal and demographic variables are unavailable; labels can encode historical judicial and institutional patterns. }\\ \hline
+\DIFaddFL{Monitoring recommendations }& \DIFaddFL{Use as a baseline only. Recompute performance and disparity metrics on new data before comparing any mitigation strategy. }\\ \hline
 \end{tabular}
-\caption{\DIFaddFL{Sample Model Card for documenting the audited classification models.}}
-\label{tab:model_card}
+\caption{\DIFaddFL{Model Card for the drug trafficking base model.}}
+\label{tab:model_card_dt_base}
+\end{table*}
+
+\begin{table*}[!htb]
+\centering
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\hline
+\textbf{\DIFaddFL{Field}} & \textbf{\DIFaddFL{Description}} \\ \hline
+\DIFaddFL{Model details }& \DIFaddFL{Drug trafficking improved model. Binary MLP classifier implemented with TensorFlow, using revised hidden layers, ReLU activations, AIF360 reweighting, class weighting, and threshold optimisation. }\\ \hline
+\DIFaddFL{Intended use }& \DIFaddFL{Retrospective mitigation experiment to evaluate whether selected error disparities can be reduced relative to the drug trafficking base model. }\\ \hline
+\DIFaddFL{Out-of-scope use }& \DIFaddFL{Sentencing, bail, eligibility, defence allocation, automated case triage without human review, or any direct decision about a defendant's rights or legal strategy. }\\ \hline
+\DIFaddFL{Data }& \DIFaddFL{Same historical DPP drug trafficking records and feature constraints as the base model. }\\ \hline
+\DIFaddFL{Performance evidence }& \DIFaddFL{Test accuracy 65\%, precision 67\%, recall 68\%, and F1 score 68\%. Confusion matrix: 1833 true positives, 1413 true negatives, 913 false positives, and 848 false negatives. }\\ \hline
+\DIFaddFL{Fairness evidence }& \DIFaddFL{Overall FPR 39.25\%, FNR 31.63\%, FDR 33.25\%, and FOR 37.51\%. FNR decreases by 8.91 percentage points relative to the base model, but FPR increases substantially. }\\ \hline
+\DIFaddFL{Known limitations }& \DIFaddFL{The model reflects a fairness--performance trade-off rather than a global improvement; regional disparities are reduced but not eliminated. }\\ \hline
+\DIFaddFL{Monitoring recommendations }& \DIFaddFL{Track FNR, FPR, FOR, TPR, and Aequitas disparities by Region and Zona; require legal and domain review before any operational use. }\\ \hline
+\end{tabular}
+\caption{\DIFaddFL{Model Card for the drug trafficking improved model.}}
+\label{tab:model_card_dt_improved}
+\end{table*}
+
+\begin{table*}[!htb]
+\centering
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\hline
+\textbf{\DIFaddFL{Field}} & \textbf{\DIFaddFL{Description}} \\ \hline
+\DIFaddFL{Model details }& \DIFaddFL{Petty theft base model. Binary LightGBM classifier to predict favourable (1) or unfavourable (0) case outcomes. }\\ \hline
+\DIFaddFL{Intended use }& \DIFaddFL{Retrospective baseline audit and methodological comparison for the petty theft experiment. }\\ \hline
+\DIFaddFL{Out-of-scope use }& \DIFaddFL{Sentencing, bail, eligibility, defence allocation, automated case triage without human review, or any direct decision about a defendant's rights or legal strategy. }\\ \hline
+\DIFaddFL{Data }& \DIFaddFL{Historical DPP petty theft records from 2017--2022, using available defendant- and case-related variables plus synthetic age. }\\ \hline
+\DIFaddFL{Performance evidence }& \DIFaddFL{Test accuracy 76\%, precision 67\%, recall 27\%, and F1 score 38\%. Confusion matrix: 878 true positives, 8279 true negatives, 432 false positives, and 2398 false negatives. }\\ \hline
+\DIFaddFL{Fairness evidence }& \DIFaddFL{Overall FPR 4.96\%, FNR 73.20\%, FDR 32.98\%, and FOR 22.46\%. Region is used as a geographic proxy attribute; the base model has high FNR across regional attribute values. }\\ \hline
+\DIFaddFL{Known limitations }& \DIFaddFL{Low recall limits usefulness even for audit settings; the dataset omits key variables such as real age, sex, prior cases, and case-specific legal facts. }\\ \hline
+\DIFaddFL{Monitoring recommendations }& \DIFaddFL{Use as a baseline only. Recompute regional disparity metrics and label distributions before any model comparison. }\\ \hline
+\end{tabular}
+\caption{\DIFaddFL{Model Card for the petty theft base model.}}
+\label{tab:model_card_pt_base}
+\end{table*}
+
+\begin{table*}[!htb]
+\centering
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\hline
+\textbf{\DIFaddFL{Field}} & \textbf{\DIFaddFL{Description}} \\ \hline
+\DIFaddFL{Model details }& \DIFaddFL{Petty theft improved model. Binary LightGBM classifier using additional leaves, AIF360 reweighting, class weighting, and threshold optimisation. }\\ \hline
+\DIFaddFL{Intended use }& \DIFaddFL{Retrospective mitigation experiment to evaluate whether selected error disparities can be reduced relative to the petty theft base model. }\\ \hline
+\DIFaddFL{Out-of-scope use }& \DIFaddFL{Sentencing, bail, eligibility, defence allocation, automated case triage without human review, or any direct decision about a defendant's rights or legal strategy. }\\ \hline
+\DIFaddFL{Data }& \DIFaddFL{Same historical DPP petty theft records and feature constraints as the base model. }\\ \hline
+\DIFaddFL{Performance evidence }& \DIFaddFL{Test accuracy 74\%, precision 53\%, recall 35\%, and F1 score 42\%. Confusion matrix: 1174 true positives, 7647 true negatives, 1064 false positives, and 2102 false negatives. }\\ \hline
+\DIFaddFL{Fairness evidence }& \DIFaddFL{Overall FPR 12.21\%, FNR 64.16\%, FDR 47.54\%, and FOR 21.56\%. FNR decreases by 9.04 percentage points relative to the base model, while FPR increases by 7.26 percentage points. }\\ \hline
+\DIFaddFL{Known limitations }& \DIFaddFL{The model improves recall and FNR but reduces accuracy and precision; Region does not achieve parity alignment across the reported Aequitas assessments. }\\ \hline
+\DIFaddFL{Monitoring recommendations }& \DIFaddFL{Track performance and disparity metrics on new cases, especially FNR and FPR by Region and Zona; review label drift and operational risks with legal experts. }\\ \hline
+\end{tabular}
+\caption{\DIFaddFL{Model Card for the petty theft improved model.}}
+\label{tab:model_card_pt_improved}
 \end{table*}
 
 \clearpage
