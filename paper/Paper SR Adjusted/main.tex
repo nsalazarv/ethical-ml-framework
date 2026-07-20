@@ -52,6 +52,8 @@ In fact, one way to address these ethical concerns is through regulation. In Jun
 
 In addition, AI cannot replicate many human capabilities. In the field of law, a lawyer must combine abstract thinking with skills to solve problems in situations of high uncertainty, in both the legal and factual domains; something a classification model cannot yet achieve \cite{surden2014machine}. That is, models cannot ``reason'' in the same manner as a human. Even the large language models -- such as OpenAI's ChatGPT or Google's Gemini -- that have become so popular recently are not capable of doing so, or at least not independently \cite{hao2023reasoning,wei2023chainofthought}. Classification models should therefore be used, if at all, only within carefully documented decision-support, auditing, or quality-control workflows.
 
+Prior work has applied machine learning to criminal-trial outcomes, crime classification, judicial-decision prediction, and litigation disputes in other legal domains \cite{10.1093/lpr/mgaa003,10.1093/lpr/mgac006,Li2019,doi:10.1061/(ASCE)CP.1943-5487.0000148}. These studies motivate the use of predictive models as research and audit tools, while also underscoring the need to examine their limitations before considering any operational legal use.
+
 It is crucial to recognise that while the potential benefits of AI and ML are considerable, the risks they pose, especially if left unchecked, can have profound implications for individuals and society as a whole. This is especially important in legal settings, where historical labels can encode institutional practices and where a favourable or unfavourable outcome label should not be confused with a complete account of justice, legal merit, or defence quality.
 
 \subsection{Background}
@@ -198,7 +200,7 @@ As it was previously mentioned, the purpose of these models is to predict if a d
     \begin{enumerate}
         \item For the pre-training phase, we use AI Fairness 360 \cite{aif360-oct-2018} and its Reweighting tool to assign new weights to the sample data, as well as Scikit-Learn's \cite{scikit-learn} \textit{compute\_class\_weight} function for optimising the class weights. Some basic hyperparameter tuning was also applied for some gains in model performance.
 
-        \item For the post-training phase, we use Fairlearn's \textit{ThresholdOptimizer} function for optimising the prediction threshold of our model. The constraint used for this is the false negative rate parity, since we are interested in minimising the amount of people that has a non-favourable ending to its trial. After that, the model gets analysed using the same tools mentioned before. Additionally, it can be documented using Google's Model Cards framework for model documentation.
+        \item For the post-training phase, we use Fairlearn's \textit{ThresholdOptimizer} function \cite{Bird2020FairlearnAT} for optimising the prediction threshold of our model. The constraint used for this is the false negative rate parity, since we are interested in minimising the amount of people that has a non-favourable ending to its trial. After that, the model gets analysed using the same tools mentioned before. Additionally, it can be documented using Google's Model Cards framework for model documentation.
     \end{enumerate}
 \end{enumerate}
 
@@ -250,7 +252,7 @@ These assessments were made considering the True Positive Rate, the False Omissi
 For this experiment, a multi-layer perceptron was used. The details of the architecture and training for the base situation are as follows,
 
 \begin{itemize}
-        \item \textbf{Architecture}: Multi-Layer Perceptron (MLP), developed with Tensorflow, and trained to minimise the binary crossentropy.
+        \item \textbf{Architecture}: Multi-Layer Perceptron (MLP), implemented with TensorFlow/Keras \cite{tensorflow2015-whitepaper,chollet2015keras}, and trained to minimise the binary crossentropy.
         \item \textbf{Type}: Classification. In this case, to predict if a person has a favourable outcome (1) or not (0).
         \item \textbf{Datasets}: 70\% split for the training set, 30\% for the testing set, and 1000 rows were removed from the training dataset to create a validation dataset. In total, there are 10683 rows for training, and 5007 for testing.
         \item \textbf{Hyperparameters}: Found through manual search.
@@ -878,15 +880,6 @@ Finally, as we continue to develop and improve our methodology for identifying a
   2020.
 
 
-\bibitem{LIMA2020101407}
-  Marcio Salles Melo Lima, Dursun Delen,
-  \textit{Predicting and explaining corruption across countries: A machine learning approach},
-  Government Information Quarterly,
-  37(1),
-  101407,
-  2020.
-
-
 \bibitem{10.1093/lpr/mgac006}
   Ke Xu, Hangyu Liu, Fang Wang, Hansheng Wang,
   \textit{{‘This Crime is Not That Crime’—Classification and evaluation of four common crimes}},
@@ -914,33 +907,6 @@ Finally, as we continue to develop and improve our methodology for identifying a
   2012.
 
 
-\bibitem{1959-09865-001}
-  F. Rosenblatt,
-  \textit{The perceptron: A probabilistic model for information storage and organization in the brain.},
-  Psychological Review,
-  65,
-  386-408,
-  1958.
-
-
-\bibitem{McCulloch1943}
-  Warren S. McCulloch, Walter Pitts,
-  \textit{A logical calculus of the ideas immanent in nervous activity},
-  The bulletin of mathematical biophysics,
-  5(4),
-  115-133,
-  1943.
-
-
-\bibitem{Cortes1995}
-  Corinna Cortes, Vladimir Vapnik,
-  \textit{Support-vector networks},
-  Machine Learning,
-  20(3),
-  273-297,
-  1995.
-
-
 \bibitem{surden2014machine}
   Harry Surden,
   \textit{Machine learning and law},
@@ -948,21 +914,6 @@ Finally, as we continue to develop and improve our methodology for identifying a
   89,
   87,
   2014.
-
-
-\bibitem{598994}
-  booktitle={Proceedings of 3rd International Conference on Document Analysis Tin Kam Ho}, title={Random decision forests},   year={1995},  volume={1},  number={},  pages={278-282 vol.1},  doi={10.1109/ICDAR.1995.598994} Recognition,
-  \textit{},
-  .
-
-
-\bibitem{Breiman2001}
-  Leo Breiman,
-  \textit{Random Forests},
-  Machine Learning,
-  45(1),
-  5-32,
-  2001.
 
 
 \bibitem{312480}
